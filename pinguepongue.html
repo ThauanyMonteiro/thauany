@@ -1,0 +1,123 @@
+
+let ballY = 200;
+
+let ballSpeedX = 5;
+
+let ballSpeedY = 3;
+let ballDiameter = 20;
+
+let leftPaddleY = 150;
+
+let rightPaddleY = 150;
+
+const paddleWidth = 10;
+
+const paddleHeight = 75;
+
+const paddleSpeed = 5;
+
+function setup() {
+
+  createCanvas(600, 400);
+
+}
+
+function draw() {
+
+  background(0);
+
+  // Desenha a bola
+
+  ellipse(ballX, ballY, ballDiameter, ballDiameter);
+
+  // Desenha a raquete esquerda
+
+  rect(10, leftPaddleY, paddleWidth, paddleHeight);
+
+  // Desenha a raquete direita
+
+  rect(width - 20, rightPaddleY, paddleWidth, paddleHeight);
+
+  // Move a bola
+
+  ballX += ballSpeedX;
+
+  ballY += ballSpeedY;
+
+  // Rebote vertical da bola
+
+  if (ballY < 0 || ballY > height) {
+
+    ballSpeedY *= -1;
+
+  }
+
+  // Rebote horizontal da bola
+
+  if (ballX < 20 && ballY > leftPaddleY && ballY < leftPaddleY + paddleHeight) {
+
+    ballSpeedX *= -1;
+
+  }
+
+  
+
+  if (ballX > width - 20 && ballY > rightPaddleY && ballY < rightPaddleY + paddleHeight) {
+
+    ballSpeedX *= -1;
+
+  }
+
+  
+
+  // Rebote se a bola sair das bordas (pontuação não incluída)
+
+  if (ballX < 0 || ballX > width) {
+
+    ballX = width / 2;
+
+    ballY = height / 2;
+
+    ballSpeedX *= -1;
+
+  }
+
+  // Move a raquete esquerda
+
+  if (keyIsDown(87)) { // Tecla 'W'
+
+    leftPaddleY -= paddleSpeed;
+
+  }
+
+  if (keyIsDown(83)) { // Tecla 'S'
+
+    leftPaddleY += paddleSpeed;
+
+  }
+
+  // Move a raquete direita
+
+  if (keyIsDown(UP_ARROW)) {
+
+    rightPaddleY -= paddleSpeed;
+
+  }
+
+  if (keyIsDown(DOWN_ARROW)) {
+
+    rightPaddleY += paddleSpeed;
+
+  }
+
+  // Limitar o movimento das raquetes para não sair da tela
+
+  leftPaddleY = constrain(leftPaddleY, 0, height - paddleHeight);
+
+  rightPaddleY = constrain(rightPaddleY, 0, height - paddleHeight);
+
+}
+
+
+
+
